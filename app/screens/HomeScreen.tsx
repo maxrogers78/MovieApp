@@ -13,6 +13,7 @@ import Carousel from "react-native-snap-carousel";
 import { useMovies } from "../hooks/useMovies";
 // components
 import { MoviePoster } from "../components/MoviePoster";
+import { HorizontalSlider } from "../components/HorizontalSlider";
 
 const { width: windowWidth } = Dimensions.get("window");
 
@@ -31,7 +32,7 @@ export const HomeScreen = () => {
 
   return (
     <ScrollView style={{ marginTop: top }}>
-      <View style={{ paddingTop: top, backgroundColor: "red" }}>
+      <View style={{ paddingTop: top }}>
         {/* Carousel Principal */}
         <View style={{ height: 440, paddingBottom: top }}>
           <Carousel
@@ -41,23 +42,12 @@ export const HomeScreen = () => {
             )}
             sliderWidth={windowWidth}
             itemWidth={windowWidth - 60}
-            style={{}}
+            inactiveSlideOpacity={0.9}
           />
         </View>
 
         {/* Películas populares */}
-        <View style={{ backgroundColor: "#fdd131", height: 260 }}>
-          <Text style={{ fontSize: 30, fontWeight: "bold" }}>Populares</Text>
-          <FlatList
-            data={peliculasEnCine}
-            renderItem={({ item }: any) => (
-              <MoviePoster movie={item} width={140} height={200} />
-            )}
-            keyExtractor={(item) => item.id.toString()}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
+        <HorizontalSlider title="Populares" movies={peliculasEnCine} />
       </View>
     </ScrollView>
   );

@@ -13,7 +13,7 @@ interface Props {
 export const MoviePoster = ({
   movie,
   width = "100%",
-  height = "100%",
+  height = "95.65%",
   isPrincipal,
 }: Props) => {
   const uri = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.24,
     shadowRadius: 7,
-
     elevation: 7,
   },
   image: { flex: 1, borderRadius: 18 },
