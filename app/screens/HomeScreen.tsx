@@ -1,8 +1,14 @@
 import React, { useEffect } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
+// hooks
 import { useMovies } from "../hooks/useMovies";
+// components
+import { MoviePoster } from "../components/MoviePoster";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const HomeScreen = () => {
+  const { top } = useSafeAreaInsets();
+
   const { peliculasEnCine, isLoading } = useMovies();
 
   if (isLoading) {
@@ -14,8 +20,8 @@ export const HomeScreen = () => {
   }
 
   return (
-    <View>
-      <Text>Home Screen</Text>
+    <View style={{ marginTop: top + 20 }}>
+      <MoviePoster movie={peliculasEnCine[0]} />
     </View>
   );
 };
