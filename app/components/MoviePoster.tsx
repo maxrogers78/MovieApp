@@ -11,7 +11,7 @@ export const MoviePoster = ({ movie }: Props) => {
   const uri = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
 
   return (
-    <View style={{ width: 320, height: 400 }}>
+    <View style={{ width: 320, height: 420 }}>
       <View style={styles.imageContainer}>
         <Image
           source={{
