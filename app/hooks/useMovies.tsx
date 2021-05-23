@@ -6,13 +6,27 @@ import movieDB from "../api/movieDB";
 
 export const useMovies = () => {
   const [isLoading, setIsLoading] = useState(true);
+
   const [peliculasEnCine, setPeliculasEnCine] = useState<Movie[]>([]);
+  const [peliculasPopulares, setPeliculasPopulares] = useState<Movie[]>([]);
+  const [peliculasTop, setPeliculasTop] = useState<Movie[]>([]);
+  const [peliculasPorSalir, setPeliculasPorSalir] = useState<Movie[]>([]);
 
   const getMovies = async () => {
-    const resp = await movieDB.get<MovieDBNowPlaying>("/now_playing");
-    const peliculas = resp.data.results;
+    const respNowPlaying = await movieDB.get<MovieDBNowPlaying>("/now_playing");
+    const respPopular = await movieDB.get<MovieDBNowPlaying>("/popular");
+    const respTopRated = await movieDB.get<MovieDBNowPlaying>("/top_rated");
+    const respUpcoming = await movieDB.get<MovieDBNowPlaying>("/upcoming");
 
-    setPeliculasEnCine(peliculas);
+    const peliculasNowPlaying = respNowPlaying.data.results;
+    const peliculasPopular = respPopular.data.results;
+    const peliculasTopRated = respTopRated.data.results;
+    const peliculasUpcoming = respUpcoming.data.results;
+
+    setPeliculasEnCine(peliculasNowPlaying);
+    setPeliculasPopulares(peliculasPopular);
+    setPeliculasTop(peliculasTopRated);
+    setPeliculasPorSalir(peliculasUpcoming);
     setIsLoading(false);
   };
 
@@ -20,5 +34,11 @@ export const useMovies = () => {
     getMovies();
   }, []);
 
-  return { peliculasEnCine, isLoading };
+  return {
+    peliculasEnCine,
+    peliculasPopulares,
+    peliculasTop,
+    peliculasPorSalir,
+    isLoading,
+  };
 };

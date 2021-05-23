@@ -20,7 +20,13 @@ const { width: windowWidth } = Dimensions.get("window");
 export const HomeScreen = () => {
   const { top } = useSafeAreaInsets();
 
-  const { peliculasEnCine, isLoading } = useMovies();
+  const {
+    peliculasEnCine,
+    peliculasPopulares,
+    peliculasTop,
+    peliculasPorSalir,
+    isLoading,
+  } = useMovies();
 
   if (isLoading) {
     return (
@@ -46,8 +52,17 @@ export const HomeScreen = () => {
           />
         </View>
 
+        {/* Películas en cartelera */}
+        <HorizontalSlider title="Cartelera" movies={peliculasEnCine} />
+
         {/* Películas populares */}
-        <HorizontalSlider title="Populares" movies={peliculasEnCine} />
+        <HorizontalSlider title="Populares" movies={peliculasPopulares} />
+
+        {/* Películas mejor criticadas */}
+        <HorizontalSlider title="Top Rated" movies={peliculasTop} />
+
+        {/* Películas por salir */}
+        <HorizontalSlider title="Próximamente" movies={peliculasPorSalir} />
       </View>
     </ScrollView>
   );
