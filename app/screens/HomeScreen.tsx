@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text } from "react-native";
+// api
 import movieDB from "../api/movieDB";
 
 export const HomeScreen = () => {
