@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useMovieDetails } from "../hooks/useMovieDetails";
 // interfaces & types
 import { RootStackParams } from "../navigation/Navigation";
 
@@ -22,6 +23,8 @@ export const DetailScreen = ({ route }: Props) => {
 
   const movie = route.params;
   const uri = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+
+  useMovieDetails(movie.id);
 
   return (
     <ScrollView>
@@ -43,7 +46,6 @@ export const DetailScreen = ({ route }: Props) => {
 
       <View style={styles.marginContainer}>
         <Icon name="star-outline" color="grey" size={30} />
-        <Text>{movie.overview}</Text>
       </View>
     </ScrollView>
   );
