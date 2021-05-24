@@ -10,10 +10,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Icon from "react-native-vector-icons/Ionicons";
+// hooks
 import { useMovieDetails } from "../hooks/useMovieDetails";
 // interfaces & types
 import { RootStackParams } from "../navigation/Navigation";
+// components
+import { MovieDetails } from "../components/MovieDetails";
 
 interface Props extends StackScreenProps<RootStackParams, "DetailScreen"> {}
 
@@ -26,14 +28,6 @@ export const DetailScreen = ({ route }: Props) => {
   const uri = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
 
   const { isLoading, movieFull, cast } = useMovieDetails(movie.id);
-
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator color="red" size={100} />
-      </View>
-    );
-  }
 
   return (
     <ScrollView>
@@ -53,10 +47,11 @@ export const DetailScreen = ({ route }: Props) => {
         <Text style={styles.title}>{movie.title}</Text>
       </View>
 
-      <View style={styles.marginContainer}>
-        <Icon name="star-outline" color="grey" size={30} />
-        <Text>{movieFull!.status}</Text>
-      </View>
+      {isLoading ? (
+        <ActivityIndicator size={30} color="grey" style={{ marginTop: 10 }} />
+      ) : (
+        <MovieDetails movieFull={movieFull!} cast={cast} />
+      )}
     </ScrollView>
   );
 };
@@ -91,7 +86,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     opacity: 0.4,
   },
   title: {
