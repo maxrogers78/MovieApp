@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 // interface
 import { Movie } from "../interfaces/movieInterface";
 
@@ -16,10 +17,16 @@ export const MoviePoster = ({
   height = "95.65%",
   isPrincipal,
 }: Props) => {
+  const navigation = useNavigation();
+
   const uri = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
 
   return (
-    <View style={{ width, height, marginHorizontal: !isPrincipal ? 8 : 0 }}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={{ width, height, marginHorizontal: !isPrincipal ? 8 : 0 }}
+      onPress={() => navigation.navigate("DetailScreen", movie)}
+    >
       <View style={styles.imageContainer}>
         <Image
           source={{
@@ -28,7 +35,7 @@ export const MoviePoster = ({
           style={styles.image}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
