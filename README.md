@@ -6,4 +6,5 @@ A movie application using React Native (Expo) and TheMovieDB API
 
 - React Native / React
 - Expo
+- Typescript
 - Axios
