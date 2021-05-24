@@ -24,7 +24,13 @@ export const MoviePoster = ({
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={{ width, height, marginHorizontal: !isPrincipal ? 8 : 0 }}
+      style={{
+        width,
+        height,
+        marginHorizontal: !isPrincipal ? 2 : 0,
+        paddingBottom: 20,
+        paddingHorizontal: 7,
+      }}
       onPress={() => navigation.navigate("DetailScreen", movie)}
     >
       <View style={styles.imageContainer}>
