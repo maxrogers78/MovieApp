@@ -8,8 +8,11 @@ import {
   ScrollView,
   Text,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/core";
+import Icon from "react-native-vector-icons/Ionicons";
 // hooks
 import { useMovieDetails } from "../hooks/useMovieDetails";
 // interfaces & types
@@ -21,7 +24,7 @@ interface Props extends StackScreenProps<RootStackParams, "DetailScreen"> {}
 
 const { height: screenHeight } = Dimensions.get("screen");
 
-export const DetailScreen = ({ route }: Props) => {
+export const DetailScreen = ({ route, navigation }: Props) => {
   const { top } = useSafeAreaInsets();
 
   const movie = route.params;
@@ -52,6 +55,11 @@ export const DetailScreen = ({ route }: Props) => {
       ) : (
         <MovieDetails movieFull={movieFull!} cast={cast} />
       )}
+
+      {/* Go back button */}
+      <TouchableOpacity style={styles.goBack} onPress={() => navigation.pop()}>
+        <Icon name="arrow-back-outline" size={60} color="white" />
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -92,5 +100,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  goBack: {
+    position: "absolute",
+    zIndex: 10,
+    elevation: 10,
+    top: 5,
+    left: 5,
   },
 });
