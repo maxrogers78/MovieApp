@@ -1,6 +1,6 @@
 # MovieApp
 
-A movie application using React Native (Expo) and TheMovieDB API
+A movie application using React Native (Expo) with Typescript
 
 ## Techonologies used
 
@@ -8,3 +8,7 @@ A movie application using React Native (Expo) and TheMovieDB API
 - Expo
 - Typescript
 - Axios
+
+## External API
+
+- TheMovieDB
