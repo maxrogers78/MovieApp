@@ -4,29 +4,43 @@ import { Movie, MovieDBNowPlaying } from "../interfaces/movieInterface";
 // api
 import movieDB from "../api/movieDB";
 
+interface MoviesState {
+  nowPlaying: Movie[];
+  popular: Movie[];
+  topRated: Movie[];
+  upcoming: Movie[];
+}
+
 export const useMovies = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [peliculasEnCine, setPeliculasEnCine] = useState<Movie[]>([]);
-  const [peliculasPopulares, setPeliculasPopulares] = useState<Movie[]>([]);
-  const [peliculasTop, setPeliculasTop] = useState<Movie[]>([]);
-  const [peliculasPorSalir, setPeliculasPorSalir] = useState<Movie[]>([]);
+  const [moviesState, setMoviesState] = useState<MoviesState>({
+    nowPlaying: [],
+    popular: [],
+    topRated: [],
+    upcoming: [],
+  });
 
   const getMovies = async () => {
-    const respNowPlaying = await movieDB.get<MovieDBNowPlaying>("/now_playing");
-    const respPopular = await movieDB.get<MovieDBNowPlaying>("/popular");
-    const respTopRated = await movieDB.get<MovieDBNowPlaying>("/top_rated");
-    const respUpcoming = await movieDB.get<MovieDBNowPlaying>("/upcoming");
+    const nowPlayingPromise = movieDB.get<MovieDBNowPlaying>("/now_playing");
+    const popularPromise = movieDB.get<MovieDBNowPlaying>("/popular");
+    const topRatedPromise = movieDB.get<MovieDBNowPlaying>("/top_rated");
+    const upcomingPromise = movieDB.get<MovieDBNowPlaying>("/upcoming");
 
-    const peliculasNowPlaying = respNowPlaying.data.results;
-    const peliculasPopular = respPopular.data.results;
-    const peliculasTopRated = respTopRated.data.results;
-    const peliculasUpcoming = respUpcoming.data.results;
+    const response = await Promise.all([
+      nowPlayingPromise,
+      popularPromise,
+      topRatedPromise,
+      upcomingPromise,
+    ]);
 
-    setPeliculasEnCine(peliculasNowPlaying);
-    setPeliculasPopulares(peliculasPopular);
-    setPeliculasTop(peliculasTopRated);
-    setPeliculasPorSalir(peliculasUpcoming);
+    setMoviesState({
+      nowPlaying: response[0].data.results,
+      popular: response[1].data.results,
+      topRated: response[2].data.results,
+      upcoming: response[3].data.results,
+    });
+
     setIsLoading(false);
   };
 
@@ -35,10 +49,7 @@ export const useMovies = () => {
   }, []);
 
   return {
-    peliculasEnCine,
-    peliculasPopulares,
-    peliculasTop,
-    peliculasPorSalir,
+    ...moviesState,
     isLoading,
   };
 };

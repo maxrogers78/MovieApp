@@ -1,12 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  View,
-  ActivityIndicator,
-  Dimensions,
-  FlatList,
-  Text,
-  ScrollView,
-} from "react-native";
+import React from "react";
+import { View, ActivityIndicator, Dimensions, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Carousel from "react-native-snap-carousel";
 // hooks
@@ -20,13 +13,7 @@ const { width: windowWidth } = Dimensions.get("window");
 export const HomeScreen = () => {
   const { top } = useSafeAreaInsets();
 
-  const {
-    peliculasEnCine,
-    peliculasPopulares,
-    peliculasTop,
-    peliculasPorSalir,
-    isLoading,
-  } = useMovies();
+  const { nowPlaying, popular, topRated, upcoming, isLoading } = useMovies();
 
   if (isLoading) {
     return (
@@ -42,7 +29,7 @@ export const HomeScreen = () => {
         {/* Carousel Principal */}
         <View style={{ height: 440, paddingBottom: top }}>
           <Carousel
-            data={peliculasEnCine}
+            data={nowPlaying}
             renderItem={({ item }: any) => (
               <MoviePoster movie={item} isPrincipal />
             )}
@@ -53,16 +40,16 @@ export const HomeScreen = () => {
         </View>
 
         {/* Películas en cartelera */}
-        <HorizontalSlider title="Cartelera" movies={peliculasEnCine} />
+        <HorizontalSlider title="Cartelera" movies={nowPlaying} />
 
         {/* Películas populares */}
-        <HorizontalSlider title="Populares" movies={peliculasPopulares} />
+        <HorizontalSlider title="Populares" movies={popular} />
 
         {/* Películas mejor criticadas */}
-        <HorizontalSlider title="Top Rated" movies={peliculasTop} />
+        <HorizontalSlider title="Top Rated" movies={topRated} />
 
         {/* Películas por salir */}
-        <HorizontalSlider title="Próximamente" movies={peliculasPorSalir} />
+        <HorizontalSlider title="Próximamente" movies={upcoming} />
       </View>
     </ScrollView>
   );
