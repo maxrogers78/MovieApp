@@ -30,8 +30,8 @@ export const DetailScreen = ({ route }: Props) => {
   const { isLoading, movieFull, cast } = useMovieDetails(movie.id);
 
   return (
-    <ScrollView>
-      <View style={{ ...styles.imageContainer, marginTop: top }}>
+    <ScrollView style={{ marginTop: top }}>
+      <View style={{ ...styles.imageContainer }}>
         <View style={styles.imageBorder}>
           <Image
             source={{
