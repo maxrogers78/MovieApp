@@ -5,6 +5,8 @@ import currencyFormatter from "currency-formatter";
 // interfaces
 import { MovieFull } from "../interfaces/movieInterface";
 import { Cast } from "../interfaces/creditsInterface";
+// components
+import { CastItem } from "./CastItem";
 
 interface Props {
   movieFull: MovieFull;
@@ -43,6 +45,12 @@ export const MovieDetails = ({ movieFull, cast }: Props) => {
       </View>
 
       {/* Casting */}
+      <View style={stylesContainer.castContainer}>
+        <Text style={styles.title}>Reparto</Text>
+      </View>
+      {cast.map((actor, idx) => (
+        <CastItem key={idx} actor={actor} />
+      ))}
     </>
   );
 };
@@ -53,6 +61,10 @@ const stylesContainer = StyleSheet.create({
   },
   ratingContainer: {
     flexDirection: "row",
+  },
+  castContainer: {
+    marginHorizontal: 20,
+    marginTop: 10,
   },
 });
 
